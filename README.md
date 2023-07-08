@@ -2,7 +2,14 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, create .env files if you want to use the authentication function:
+```bash
+GOOGLE_ID
+GOOGLE_SECRET
+```
+
+
+Second, run the development server:
 
 ```bash
 npm run dev
