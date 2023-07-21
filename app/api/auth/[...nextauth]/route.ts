@@ -1,10 +1,8 @@
-import NextAuth, { AuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";    
 import GoogleProvider from "next-auth/providers/google"
 
-/* You shouldn't export authOptions in API route.ts / route.js file.
- This is the cause of error!! */
-
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID as string,
