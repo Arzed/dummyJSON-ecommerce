@@ -5,6 +5,7 @@ import { IProduct } from "@/types";
 import { format } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "../ui/button";
+import Image from "next/image";
 // import { getAllProduct } from '../api'
 
 interface Props {
@@ -16,11 +17,13 @@ const ProductList = ({products}: Props) => {
     <div className="container border border-slate-300 p-5 my-10 rounded-lg">
         <div className="justify-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {products.map((product) => (
-                <div className="relative bg-white rounded-lg overflow-hidden shadow shadow-slate-700 shadow-lg" key={product.id}>
-                    <img
+                <div className="relative bg-white rounded-lg overflow-hidden shadow-slate-700 shadow-lg" key={product.id}>
+                    <Image
                     key={product.id}
                     src={product.thumbnail}
                     alt={product.title}
+                    width={900}
+                    height={900}
                     className=" w-full h-full"
                     />
                     <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 hover:opacity-100 transition duration-300 ease-in-out">

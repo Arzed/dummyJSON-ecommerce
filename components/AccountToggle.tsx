@@ -38,7 +38,8 @@ const AccountToggle = () => {
               setIsLoading(true)
             }}
             variant={'ghost'}
-            className='flex'
+            size={"sm"}
+            className='hidden md:flex'
             >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -48,7 +49,7 @@ const AccountToggle = () => {
         </Link>
         <Button
           variant={'outline'}
-          className='flex'
+          className='hidden md:flex'
         >
           <span>Daftar</span>
         </Button>

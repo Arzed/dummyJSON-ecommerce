@@ -19,18 +19,13 @@ import Cart from "@/components/Cart"
 import { useEffect, useState } from "react"
 import { ICategory } from "@/types"
 import { ScrollArea } from "./ui/scroll-area"
+import Sidebar from "@/components/Sidebar"
 
-export function Navbar() {
-  const [categories, setCategories] = useState<[]>([])
-  useEffect(() => {
-    fetchCategories()
-  }, [])
+interface NavbarProp {
+  categories: string[]
+}
 
-  const fetchCategories = async () => {
-    const result = await axios.get('https://dummyjson.com/products/categories').then(res => res.data)
-    setCategories(result)
-  }
-
+export function Navbar({categories}: NavbarProp) {
   return (
     <div className="fixed backdrop-blur-sm bg-slate-100/75 dark:bg-slate-900/75 z-50 top-0 left-0 right-0 h-20 border-b border-slate-300 dark:border-slate-700 shadow-sm flex items-center justify-between">
       <div className="flex gap-10 container">
@@ -38,7 +33,7 @@ export function Navbar() {
           <Icons.logo className="h-7 w-7 mr-2" />
           <span className="text-lg font-bold">LOGO</span>
         </Link>
-        <NavigationMenu>
+        <NavigationMenu className="hidden md:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link href="/products" legacyBehavior passHref>
@@ -93,8 +88,11 @@ export function Navbar() {
         </NavigationMenu>
       </div>
       <div className="flex container items-center justify-end space-x-4">
-            <Cart />
-            <AccountToggle />
+          <Cart />
+          <AccountToggle />
+          <div className="flex md:hidden">
+            <Sidebar categories={categories}/>
+          </div>
         </div>
     </div>
   )

@@ -10,26 +10,30 @@ import { Navbar } from "@/components/Navbar";
 //   data: any
 // }
 
-async function getData() {
-  const res = await fetch(`https://dummyjson.com/products?limit=9`,{ cache: 'no-store'})
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
+async function getProducts() {
+  const res = await axios.get(`https://dummyjson.com/products?limit=9`).then(res => res.data).catch(err => console.error(err))
   
-  return res.json();
+  return res.products;
+}
+
+async function getCategories() {
+  const res = await axios.get(`https://dummyjson.com/products/categories`).then(res => res.data).catch(err => console.error(err))
+  
+  return res;
 }
 
 export default async function Home() {
-  const data = await getData();
+  const products = await getProducts();
+  const categories = await getCategories();
   return (
     <>
-    <Navbar />
+    <Navbar categories={categories} />
     <div className="flex">
       <ScrollArea className='max-h-[100vh] w-full rounded-md border overflow-y-auto'>
         <main className="py-24 px-6">
           <Banner />
           <h1 className="text-2xl text-center">Featured Products</h1>
-          <ProductList products={data.products} />
+          <ProductList products={products} />
           <div className="flex place-content-center my-10">
               <Link href={'/products'} className={buttonVariants({size: 'lg'})}>Lihat selengkapnya</Link>
           </div>

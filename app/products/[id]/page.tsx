@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import QuantityPicker from '@/components/QuantityPicker'
 import { Icons } from '@/components/home/Icons'
 import { ProductContext } from '@/context/CartContext'
+import Image from 'next/image'
 
 export default function Product() {
     const [product, setProduct] = useState<IProduct[] | any>([])
@@ -48,7 +49,7 @@ export default function Product() {
                 {/* ======== Image Section ============ */}
                 <div className="max-h-[50vh] w-full relative md:max-h-full md:gap-8 md:grid md:place-content-center overflow-hidden">
                     <div className="">
-                        <img src={product.thumbnail}
+                        <Image src={product.thumbnail}
                         alt="Inventory item" 
                         width={500}
                         height={500}
