@@ -10,10 +10,12 @@ import { Navbar } from '@/components/Navbar'
  
 export default function Categories() {
     const [products, setProducts] = useState<IProduct[]>([])
+    const [categories, setCategories] = useState<string[]>([])
     const pathname = usePathname()
    
     useEffect(() => {
-        fetchProducts()
+        fetchProducts();
+        fetchCategories();
     }, [])
     
     const fetchProducts = async () => {
@@ -21,10 +23,16 @@ export default function Categories() {
         const res = await axios.get(`https://dummyjson.com/products${url}`).then(response => response.data)
         setProducts(res.products)
     }
+
+    const fetchCategories = async () => {
+        const url = `${pathname}`
+        const res = await axios.get(`https://dummyjson.com/products${url}`).then(response => response.data)
+        setCategories(res)
+    }
     
   return (
     <>
-    <Navbar />
+    <Navbar categories={categories} />
     <div className='flex'>
       <ScrollArea className='max-h-[100vh] w-full rounded-md border overflow-y-auto'>
       <main className="py-24 px-6">
