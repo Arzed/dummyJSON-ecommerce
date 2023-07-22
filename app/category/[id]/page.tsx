@@ -26,7 +26,7 @@ export default function Categories() {
 
     const fetchCategories = async () => {
         const url = `${pathname}`
-        const res = await axios.get(`https://dummyjson.com/products${url}`).then(response => response.data)
+        const res = await axios.get(`https://dummyjson.com/products/categories`).then(response => response.data)
         setCategories(res)
     }
     
