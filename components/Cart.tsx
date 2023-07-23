@@ -14,10 +14,24 @@ import {
 import { Icons } from "./home/Icons"
 import { cn } from "@/lib/utils"
 import { ProductContext } from "@/context/CartContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
+import Image from "next/image"
+import QuantityPicker from "./QuantityPicker"
+import { ScrollArea } from "./ui/scroll-area"
 
 export default function Cart() {
   const { savedProduct, removeProduct } = useContext(ProductContext);
+  // const qty = savedProduct.map(product => product.qty)
+  // const [numberOfitems, updateNumberOfItems] = useState(qty)
+
+  // function increment(numberOfitems: number) {
+  //   numberOfitems + 1
+  // }
+
+  // function decrement(numberOfitems: number) {
+  //   if (numberOfitems === 1) return
+  //   numberOfitems - 1
+  // }
 
   const handleRemoveProduct = (productName: string) => {
     removeProduct(productName)
@@ -25,8 +39,11 @@ export default function Cart() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant={'ghost'} size={'icon'} className="rounded-full p-2">
+        <Button variant={'ghost'} size={'icon'} className="relative rounded-full p-2">
             <Icons.cart />
+            {savedProduct.length > 0 && (
+              <span className="absolute py-1 px-2 bottom-0 right-0 rounded-full text-xs text-white bg-red-500">{savedProduct.length}</span>
+            )}
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -41,39 +58,31 @@ export default function Cart() {
         </SheetHeader>
         {savedProduct.length === 0 ? (
           <div className="container flex h-[80vh] flex-col items-center justify-center">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-              Keranjang belanjaan anda kosong
-          </div>
-        </div>
-        ) : (
-          <div>
-            {savedProduct.map((product) => (
-              <div key={product.id} className="border border-gray-300 rounded-md p-4 flex flex-col items-center">
-              <img src={product.thumbnail} alt={product.title} className="h-40 w-40 mb-4" />
-              <h2 className="text-lg font-bold mb-2">{product.title}</h2>
-              <div className="flex items-center mb-2">
-                <span className="mr-2 font-bold">Height:</span>
-                <span>{product.price} cm</span>
-              </div>
-              <div className="flex items-center mb-2">
-                <span className="mr-2 font-bold">Weight:</span>
-                <span>{product.rating} kg</span>
-              </div>
-              <button onClick={() => handleRemoveProduct(product.title)} className="">
-                Remove
-              </button>
+            <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+                Keranjang belanjaan anda kosong
             </div>
-            ))}
+          </div>
+        ) : (
+          <div className="flex h-[80vh] flex-col">
+            <ScrollArea className="max-h-[80vh] w-full rounded-md border overflow-y-auto">
+              {savedProduct.map((product) => (
+                <div key={product.id} className="rounded-md p-4 flex flex-col items-center">
+                  <div className="flex">
+                    <Image src={product.thumbnail} alt={product.title} width={900} height={900} className="mb-4 rounded-md" />
+                  </div>
+                  <div className="flex">
+                    <h2 className="text-lg font-bold my-1">{product.title}</h2>
+                    <span className="text-lg font-bold mx-2 my-1">x{product.qty}</span>
+                    {/* <QuantityPicker increment={undefined} decrement={undefined} numberOfitems={0} /> */}
+                    <Button variant={'destructive'} size={'icon'} onClick={() => handleRemoveProduct(product.title)} className="flex">
+                      <Icons.delete/>
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </ScrollArea>
           </div>
         )}
-        {/* <div className="grid gap-4 py-4">
-          <div className="grid items-center gap-4">
-            Lorem ipsum
-          </div>
-          <div className="grid items-center gap-4">
-            Dolor sit amet
-          </div>
-        </div> */}
         <SheetFooter>
           <SheetClose asChild>
             {savedProduct.length === 0 ? <Button disabled={true} type="submit">Checkout</Button> : <Button type="submit">Checkout</Button>}

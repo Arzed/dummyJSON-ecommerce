@@ -5,6 +5,8 @@ import Provider from '@/components/Provider'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { NextAuthProvider } from '@/components/SessionProvider'
+import ProductProvider from '@/context/CartContext'
+import { Toaster } from '@/components/ui/toaster'
 
 const roboto = Roboto({
   subsets: ['cyrillic'],
@@ -26,7 +28,10 @@ export default function RootLayout({
       <body className={cn(roboto.className, 'overflow-hidden')}>
         <NextAuthProvider>
           <Provider>
+            <ProductProvider>
               {children}
+              <Toaster />
+            </ProductProvider>
           </Provider>
         </NextAuthProvider>
       </body>

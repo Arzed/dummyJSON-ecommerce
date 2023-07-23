@@ -23,6 +23,7 @@ import {
     Search,
     Smile,
     Menu,
+    XCircle,
   } from "lucide-react"
   
   export type Icon = LucideIcon
@@ -48,6 +49,7 @@ import {
     add: Plus,
     smile: Smile,
     menu: Menu,
+    x: XCircle,
     google: ({ ...props }: LucideProps) => (
       <svg
         aria-hidden="true"

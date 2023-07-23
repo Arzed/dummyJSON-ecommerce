@@ -10,7 +10,6 @@ interface QuantityPickerProps {
 export default function QuantityPicker({increment, decrement, numberOfitems}: QuantityPickerProps) {
   return (
     <div className='flex items-center'>
-          <div className="px-2 text-xs">PCS</div>
         <Button
           variant={'ghost'}
           size={'sm'}

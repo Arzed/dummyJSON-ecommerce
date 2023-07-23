@@ -1,6 +1,6 @@
 'use client'
 
-import { IProduct, CartContextState } from '@/types/index';
+import { IProduct, CartContextState, SavedProduct } from '@/types/index';
 import { createContext, useContext, useState } from 'react'
 
 const contextDefaultValues: CartContextState = {
@@ -16,14 +16,14 @@ type ProductProviderProps = {
 }
 
 const ProductProvider = ({children}: ProductProviderProps) => {
-  const [savedProduct, setSavedProduct] = useState<IProduct[]>([]);
+  const [savedProduct, setSavedProduct] = useState<SavedProduct[]>([]);
 
-  const addProduct = (product: IProduct) => {
-    setSavedProduct([...savedProduct, { ...product }]);
+  const addProduct = (product: IProduct, qty:  number) => {
+    setSavedProduct([...savedProduct, { ...product, qty }]);
   };
 
   const removeProduct = (productName: string) => {
-    setSavedProduct(savedProduct.filter((product) => product.id !== product.id));
+    setSavedProduct(savedProduct.filter((product) => product.title !== productName));
   }
 
   return (

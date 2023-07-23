@@ -11,12 +11,14 @@ import QuantityPicker from '@/components/QuantityPicker'
 import { Icons } from '@/components/home/Icons'
 import { ProductContext } from '@/context/CartContext'
 import Image from 'next/image'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Product() {
     const [product, setProduct] = useState<IProduct[] | any>([])
     const pathname = usePathname()
     const [numberOfitems, updateNumberOfItems] = useState(1)
     const { addProduct } = useContext(ProductContext);
+    const { toast } = useToast();
    
     useEffect(() => {
         fetchProducts()
@@ -26,7 +28,6 @@ export default function Product() {
         const url = `${pathname}`
         const res = await axios.get(`https://dummyjson.com${url}`).then(response => response.data)
         setProduct(res)
-        console.log(res)
     }
 
     function increment() {
@@ -40,6 +41,10 @@ export default function Product() {
 
     const addItemToCart = (product: IProduct, qty: number) => {
         addProduct(product, qty)
+        toast({
+            title: 'Sukses',
+            description: "Berhasil di tambahkan ke dalam keranjang"
+        })
     }
     
   return (
@@ -51,8 +56,8 @@ export default function Product() {
                     <div className="">
                         <Image src={product.thumbnail}
                         alt="Inventory item" 
-                        width={500}
-                        height={500}
+                        width={1200}
+                        height={1200}
                         className="max-h-full object-cover w-full md:rounded-2xl md:cursor-pointer shadow-md" />
                     </div>
                 </div>
@@ -76,6 +81,7 @@ export default function Product() {
 
                 <div className="space-y-3 md:flex md:space-y-0 md:space-x-3">
                     <div className="flex justify-between items-center bg-regular rounded-md md:flex-[35%] gap-4">
+                        <div className="px-2 text-xs">PCS</div>
                         <QuantityPicker
                           increment={increment}
                           decrement={decrement}
@@ -84,14 +90,13 @@ export default function Product() {
                         <button
                             // full
                             title='Add to Cart'
-                            onClick={() => addItemToCart(product, numberOfitems)}
                             className='w-full flex justify-center items-center space-x-3 p-3 text-slate-200 bg-green-700 rounded-md shadow-2xl shadow-green-700 md:flex-[65%] active:scale-95 hover:opacity-70 duration-200'
                         >
                             Beli Sekarang
                         </button>
                     </div>
                 </div>
-                <Button className='py-5' variant={'outline'}>
+                <Button className='py-5' variant={'outline'} onClick={() => addItemToCart(product, numberOfitems)}>
                     <Icons.cart className='h-5 w-5' />
                 </Button>
                 </div>
