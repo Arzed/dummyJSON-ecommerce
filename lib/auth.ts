@@ -8,9 +8,4 @@ export const authOptions: NextAuthOptions = {
         clientSecret: process.env.GOOGLE_SECRET as string
     })
   ],
-  callbacks: {
-    async signIn({ account, profile }) {
-      return true`
-    }
-  },
 };
